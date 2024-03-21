@@ -1,0 +1,133 @@
+
+<!--  React concepts: components, props, and state. -->
+ <html>
+  <body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      const app = document.getElementById("app");
+
+function Header(props) {
+console.log(props);
+  return <h1>Develop. Preview. Ship.</h1>;
+}
+ 
+function Headerwithdestructingobj({ title }) {
+  console.log(title); // "React"
+  return <h1>{title}</h1>;
+}
+function Headerwithoutdestructingobj(props) {
+  console.log(props); // "React"
+  return <h1>{props.title}</h1>;
+}
+function Headerwithcustom({title}) {
+return <h1>{`Cool ${title}`}</h1>;
+}
+
+// with function
+function createTitle(title) {
+  if (title) {
+    return title;
+  } else {
+    return 'Default title';
+  }
+}
+ 
+function Headerwithfunction({ title }) {
+  return <h1>{createTitle(title)}</h1>;
+}
+//.......
+function HomePagewithlistwithkeypropmissvalue() {
+  const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
+ 
+  return (
+    <div>
+      <Header title="Develop. Preview. Ship." />
+      <ul>
+        {names.map((name) => (
+          <li>{name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function HomePagewithoutkeypropmissingwarning() {
+  const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
+ 
+  return (
+    <div>
+      <Header title="Develop. Preview. Ship." />
+      <ul>
+        {names.map((name) => (
+          <li key={name}>{name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+function HomePageInteractivity() {
+  const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
+  function handleClick() {
+    console.log("increment like count")
+  }
+  return (
+    <div>
+      <Header title="Develop. Preview. Ship." />
+      <ul>
+        {names.map((name) => (
+          <li key={name}>{name}</li>
+        ))}
+      </ul>
+      <button onClick={handleClick}>Like</button>
+    </div>
+  );
+}
+
+function HomePageWithState() {
+  
+  const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
+  const [likes,setLikes] = React.useState(0);//You can also take the opportunity to add the initial value of your likes state to 0 usingg useState
+ 
+  // ...
+ 
+ function handleClick() {
+   setLikes(likes + 1);
+ }
+
+ return (
+  <div>
+      <Header title="Develop. Preview. Ship." />
+      <ul>
+        {names.map((name) => (
+          <li key={name}>{name}</li>
+        ))}
+      </ul>
+     <button onClick={handleClick}>Likes ({likes})</button>
+   </div>
+ );
+}
+function HomePage() {
+  return (
+    <div>
+      <Header title="React0"/>
+      <Headerwithdestructingobj title="React1"/>
+      <Headerwithoutdestructingobj title="React2"/>
+      <Headerwithcustom title="React4"/>
+      <Headerwithfunction title="React5"/>
+      <HomePagewithlistwithkeypropmissvalue /> //with warning
+      <HomePagewithoutkeypropmissingwarning /> // without warning
+      <HomePageInteractivity />
+      <HomePageWithState />
+    </div>
+  );
+}
+ 
+const root = ReactDOM.createRoot(app);
+root.render(<HomePage />);
+    </script>
+  </body>
+</html>
